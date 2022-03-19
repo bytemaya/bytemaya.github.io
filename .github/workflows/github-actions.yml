@@ -45,7 +45,7 @@ jobs:
 
       - name: Push changes
         if: ${{ success() }}
-        uses: ad-m/github-push-action@main
+        uses: ad-m/github-push-action@master
         with:
           BRANCH: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
