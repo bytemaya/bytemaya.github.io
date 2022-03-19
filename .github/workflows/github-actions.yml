@@ -38,6 +38,7 @@ jobs:
       - name: Commit files for change
         if: ${{ success() }}
         run: |
+          cd main
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
