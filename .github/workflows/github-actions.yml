@@ -5,13 +5,50 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
+
+      - name: checkout main branch into main folder.
         uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+        with:
+          ref: main
+          path: main
+
+      - name: remove all files
+        run: rm -rf main/*
+      - name: create CNAME file
+        run: echo "bytemaya.com" > main/CNAME
+
+      - name: checkout master branch into master folder.
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: master
+
+      - name: run yarn install and build
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          cd master
+          yarn install
+          yarn build
+
+      - name: move files
+        if: ${{ success() }}
+        run: |
+          mv master/public/* main/.
+          rm -rf master
+
+      - name: Commit files for change
+        if: ${{ success() }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Add changes"
+
+      - name: Push changes
+        if: ${{ success() }}
+        uses: ad-m/github-push-action@main
+        with:
+          BRANCH: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
+
+      
