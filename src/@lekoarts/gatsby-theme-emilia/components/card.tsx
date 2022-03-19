@@ -25,7 +25,7 @@ const shadowArray = px.map((v) => `rgba(0, 0, 0, 0.15) 0px ${v} ${v} 0px`)
 const Card = ({ item, overlay = `#000`, shadow = shadowArray, eager }: CardProps) => {
     const index = item.title.indexOf('$');
     const title = item.title.substring(0, index);
-    const url = item.title.substring(index+1);
+    const url = item.title.substring(index + 1);
     return (
         <Link
             aria-label={`Visit ${title} project page`}
@@ -40,7 +40,7 @@ const Card = ({ item, overlay = `#000`, shadow = shadowArray, eager }: CardProps
                         opacity: 1,
                     },
                 },
-                // boxShadow: shadow.join(`, `),
+                boxShadow: '10px 10px 20px #ccc',//shadow.join(`, `),
                 position: `relative`,
             })}
             // to={item.slug}
@@ -56,7 +56,7 @@ const Card = ({ item, overlay = `#000`, shadow = shadowArray, eager }: CardProps
                     opacity: 0,
                     transition: `all 0.3s ease-in-out`,
                     color: `white`,
-                    backgroundColor: rgba(overlay, 0.9),
+                    backgroundColor: '#55555588',//rgba(overlay, 0.9),
                     position: `absolute`,
                     // top: 0,
                     left: 0,
@@ -69,7 +69,10 @@ const Card = ({ item, overlay = `#000`, shadow = shadowArray, eager }: CardProps
                     {title}
                 </Heading>
             </div>
-            <GatsbyImage loading={eager ? `eager` : `lazy`} image={item.cover.childImageSharp.gatsbyImageData} alt="" />
+            <GatsbyImage loading={eager ? `eager` : `lazy`} image={item.cover.childImageSharp.gatsbyImageData} alt="" sx={{
+                // borderRadius: '10px',
+                outline: `10px solid white`
+            }} />
         </Link>
     )
 }

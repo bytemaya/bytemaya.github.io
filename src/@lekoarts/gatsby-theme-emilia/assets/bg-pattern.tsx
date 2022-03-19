@@ -1,8 +1,8 @@
 import * as React from "react"
-import { useColorMode, get } from "theme-ui"
+// import { useColorMode, get } from "theme-ui"
 
 const BGPattern = () => {
-    const [colorMode, setColorMode] = useColorMode()
+    // const [colorMode, setColorMode] = useColorMode()
     // setColorMode('dark');
 
     return (
